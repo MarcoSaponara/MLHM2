@@ -24,23 +24,23 @@ class Caltech(VisionDataset):
  
 	paths = []
 	with open(split + '.txt', 'r') as f:
-	     for l in lines:
-	     paths.append(l)
+	    for l in lines:
+	       paths.append(l)
 		
 	self.dataset = []
 	labels = []
 		
 	for i in paths:
 	    if i[:10] != 'BACKGROUND':
-	    label = i[:-17]
-	    labels.append(label)
-	    labels = list(set(labels))
+	       label = i[:-17]
+	       labels.append(label)
+	labels = list(set(labels))
 		
 	self.outputs = []
 	for i in paths:
 	    if i[:10] != 'BACKGROUND':
-	    self.dataset.append(pil_loader(i))
-	    self.outputs.append(labels.index(i[:-17]))
+	       self.dataset.append(pil_loader(i))
+	       self.outputs.append(labels.index(i[:-17]))
 				
 	'''
         - Here you should implement the logic for reading the splits files and accessing elements
