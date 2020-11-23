@@ -15,71 +15,71 @@ def pil_loader(path):
 
 
 class Caltech(VisionDataset):
-    def __init__(self, root, split='train', transform=None, target_transform=None):
+	def __init__(self, root, split='train', transform=None, target_transform=None):
         super(Caltech, self).__init__(root, transform=transform, target_transform=target_transform)
 
-        self.split = split 
-	# This defines the split you are going to use
-        # (split files are called 'train.txt' and 'test.txt')
+        	self.split = split 
+		# This defines the split you are going to use
+        	# (split files are called 'train.txt' and 'test.txt')
         
-	paths = list()
-	with open(split + '.txt', 'r') as f:
-	    for l in lines:
-	       paths.append(l)
+		paths = list()
+		with open(split + '.txt', 'r') as f:
+	    	   for l in lines:
+	       	       paths.append(l)
 		
-	self.dataset = []
-	labels = []
+		self.dataset = []
+		labels = []
 		
-	for i in paths:
-	    if i[:10] != 'BACKGROUND':
-	       label = i[:-17]
-	       labels.append(label)
-	labels = list(set(labels))
+		for i in paths:
+	    	    if i[:10] != 'BACKGROUND':
+	       		label = i[:-17]
+	       		labels.append(label)
+		labels = list(set(labels))
 		
-	self.outputs = []
-	for i in paths:
-	    if i[:10] != 'BACKGROUND':
-	       self.dataset.append(pil_loader(i))
-	       self.outputs.append(labels.index(i[:-17]))
+		self.outputs = []
+		for i in paths:
+	   	    if i[:10] != 'BACKGROUND':
+	       	       self.dataset.append(pil_loader(i))
+	       	       self.outputs.append(labels.index(i[:-17]))
 				
-	'''
-        - Here you should implement the logic for reading the splits files and accessing elements
-        - If the RAM size allows it, it is faster to store all data in memory
-        - PyTorch Dataset classes use indexes to read elements
-        - You should provide a way for the __getitem__ method to access the image-label pair
-          through the index
-        - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
-        '''
+		'''
+        	- Here you should implement the logic for reading the splits files and accessing elements
+        	- If the RAM size allows it, it is faster to store all data in memory
+        	- PyTorch Dataset classes use indexes to read elements
+        	- You should provide a way for the __getitem__ method to access the image-label pair
+        	  through the index
+        	- Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
+        	'''
 
-    def __getitem__(self, index):
+    	def __getitem__(self, index):
 		
-        '''
-        __getitem__ should access an element through its index
-        Args:
-            index (int): Index
+        	'''
+        	__getitem__ should access an element through its index
+        	Args:
+            	index (int): Index
 
-        Returns:
-            tuple: (sample, target) where target is class_index of the target class.
-        '''
+        	Returns:
+            	tuple: (sample, target) where target is class_index of the target class.
+        	'''
 
-        image = self.dataset[index] 
-	label = self.outputs[index]
+        	image = self.dataset[index] 
+		label = self.outputs[index]
 	
 	
-	# Provide a way to access image and label via index
-        # Image should be a PIL Image
-        # label can be int
+		# Provide a way to access image and label via index
+        	# Image should be a PIL Image
+        	# label can be int
 
-        # Applies preprocessing when accessing the image
-        if self.transform is not None:
-            image = self.transform(image)
+       	 	# Applies preprocessing when accessing the image
+        	if self.transform is not None:
+            	   image = self.transform(image)
 
-        return image, label
+        	return image, label
 
-    def __len__(self):
-        '''
-        The __len__ method returns the length of the dataset
-        It is mandatory, as this is used by several other components
-        '''
-        return len(self.dataset)
+    	def __len__(self):
+        	'''
+        	The __len__ method returns the length of the dataset
+        	It is mandatory, as this is used by several other components
+        	'''
+        	return len(self.dataset)
  
