@@ -31,8 +31,8 @@ class Caltech(VisionDataset):
         '''
         paths = list()
         with open(split + '.txt', 'r') as f:
-		for l in lines:
-		    paths.append(l)
+	    for line in f:
+		paths.append(line)
                
         self.dataset = []
 	labels = []
