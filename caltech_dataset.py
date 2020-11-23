@@ -22,27 +22,27 @@ class Caltech(VisionDataset):
                            # (split files are called 'train.txt' and 'test.txt')
 
  
-		paths = []
-		with open(split + '.txt', 'r') as f:
-			for l in lines:
-				paths.append(l)
+	paths = []
+	with open(split + '.txt', 'r') as f:
+	     for l in lines:
+	     paths.append(l)
 		
-		self.dataset = []
-		labels = []
+	self.dataset = []
+	labels = []
 		
-		for i in paths:
-			if i[:10] != 'BACKGROUND':
-				label = i[:-17]
-				labels.append(label)
-		labels = list(set(labels))
+	for i in paths:
+	    if i[:10] != 'BACKGROUND':
+	    label = i[:-17]
+	    labels.append(label)
+	    labels = list(set(labels))
 		
-		self.outputs = []
-		for i in paths:
-			if i[:10] != 'BACKGROUND':
-				self.dataset.append(pil_loader(i))
-				self.outputs.append(labels.index(i[:-17]))
+	self.outputs = []
+	for i in paths:
+	    if i[:10] != 'BACKGROUND':
+	    self.dataset.append(pil_loader(i))
+	    self.outputs.append(labels.index(i[:-17]))
 				
-		'''
+	'''
         - Here you should implement the logic for reading the splits files and accessing elements
         - If the RAM size allows it, it is faster to store all data in memory
         - PyTorch Dataset classes use indexes to read elements
@@ -62,10 +62,13 @@ class Caltech(VisionDataset):
             tuple: (sample, target) where target is class_index of the target class.
         '''
 
-        image, label = [self.dataset[index] , self.outputs[index]]
-		... # Provide a way to access image and label via index
-                           # Image should be a PIL Image
-                           # label can be int
+        image = self.dataset[index] 
+	label = self.outputs[index]
+	
+	
+	# Provide a way to access image and label via index
+        # Image should be a PIL Image
+        # label can be int
 
         # Applies preprocessing when accessing the image
         if self.transform is not None:
@@ -78,5 +81,5 @@ class Caltech(VisionDataset):
         The __len__ method returns the length of the dataset
         It is mandatory, as this is used by several other components
         '''
-        length = len(dataset)
-        return length
+        return len(dataset)
+ 
