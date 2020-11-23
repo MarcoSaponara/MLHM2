@@ -22,7 +22,7 @@ class Caltech(VisionDataset):
 	# This defines the split you are going to use
         # (split files are called 'train.txt' and 'test.txt')
         
-	paths = []
+	paths = list()
 	with open(split + '.txt', 'r') as f:
 	    for l in lines:
 	       paths.append(l)
