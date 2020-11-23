@@ -30,24 +30,24 @@ class Caltech(VisionDataset):
         - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
         '''
         paths = list()
-		    with open(split + '.txt', 'r') as f:
-	    	    for l in lines:
-	       	     paths.append(l)
+        with open(split + '.txt', 'r') as f:
+	    for l in lines:
+	       paths.append(l)
                
         self.dataset = []
-		    labels = []
+	labels = []
         
         for i in paths:
            if i[:10] != 'BACKGROUND':
-             label = i[:-17]
-	       		 labels.append(label)
+               label = i[:-17]
+	       labels.append(label)
         labels = list(set(labels))
         
         self.outputs = []
-	    	for i in paths:
+	for i in paths:
            if i[:10] != 'BACKGROUND':
-             self.dataset.append(pil_loader(i))
-	       	   self.outputs.append(labels.index(i[:-17]))
+               self.dataset.append(pil_loader(i))
+	       self.outputs.append(labels.index(i[:-17]))
 
     def __getitem__(self, index):
         '''
@@ -58,7 +58,7 @@ class Caltech(VisionDataset):
             tuple: (sample, target) where target is class_index of the target class.
         '''
         image = self.dataset[index] 
-		    label = self.outputs[index]
+        label = self.outputs[index]
         
         #image, label = ... 
         # Provide a way to access image and label via index
