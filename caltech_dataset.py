@@ -32,22 +32,22 @@ class Caltech(VisionDataset):
         paths = list()
         with open(split + '.txt', 'r') as f:
 	    for l in lines:
-	       paths.append(l)
+		paths.append(l)
                
         self.dataset = []
 	labels = []
         
         for i in paths:
-           if i[:10] != 'BACKGROUND':
-               label = i[:-17]
-	       labels.append(label)
+            if i[:10] != 'BACKGROUND':
+		label = i[:-17]
+	        labels.append(label)
         labels = list(set(labels))
         
         self.outputs = []
 	for i in paths:
-           if i[:10] != 'BACKGROUND':
-               self.dataset.append(pil_loader(i))
-	       self.outputs.append(labels.index(i[:-17]))
+            if i[:10] != 'BACKGROUND':
+		self.dataset.append(pil_loader(i))
+	        self.outputs.append(labels.index(i[:-17]))
 
     def __getitem__(self, index):
         '''
