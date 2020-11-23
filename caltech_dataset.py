@@ -29,10 +29,10 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
         '''
-        paths = list()
+        paths = []
         with open(split + '.txt', 'r') as f:
-	    for line in f:
-		paths.append(line)
+	     for line in f:
+		 paths.append(line)
                
         self.dataset = []
 	labels = []
