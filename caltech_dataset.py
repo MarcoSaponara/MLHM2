@@ -31,6 +31,7 @@ class Caltech(VisionDataset):
         '''
         self.labels = []
         self.data = []
+        #with open(split + '.txt', 'r') as f:
         with open(split + '.txt', 'r') as f:
             for line in f:
                 line = line.replace('\n', '')
