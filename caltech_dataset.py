@@ -33,7 +33,6 @@ class Caltech(VisionDataset):
         self.data = []
         with open(split + '.txt', 'r') as f:
             for line in f:
-                line = line[:-1] #remove '\n'
                 if line[:-15].lower()!='background_google':
                     self.labels.append(line[:-15])
                     self.data.append(pil_loader(root + '/' + line))
