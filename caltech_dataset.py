@@ -32,7 +32,7 @@ class Caltech(VisionDataset):
         self.labels = []
         self.data = []
         #with open(split + '.txt', 'r') as f:
-        with open(split + '.txt', 'r') as f:
+        with open('https://github.com/MarcoSaponara/MLHM2/blob/master/' + split + '.txt', 'r') as f:
             for line in f:
                 line = line.replace('\n', '')
                 if line[:-15].lower()!='background_google':
