@@ -29,25 +29,21 @@ class Caltech(VisionDataset):
           through the index
         - Labels should start from 0, so for Caltech you will have lables 0...100 (excluding the background class) 
         '''
-        paths = []
+        self.labels = []
+        self.data = []
         with open(split + '.txt', 'r') as f:
-	     for line in f:
-		 paths.append(line)
-               
-        self.dataset = []
-	labels = []
+            for line in f:
+                if line[:-17].lower()!='background':
+                    self.labels.append(line[:-17])
+                    self.data.append(pil_loader(line))
+                    
+        labels_set = list(set(self.labels))
         
-        for i in paths:
-            if i[:10] != 'BACKGROUND':
-		label = i[:-17]
-	        labels.append(label)
-        labels = list(set(labels))
+        for i in range(len(self.labels)):
+            self.labels[i] = labels_set.index(self.labels[i])
+                    
+                
         
-        self.outputs = []
-	for i in paths:
-            if i[:10] != 'BACKGROUND':
-		self.dataset.append(pil_loader(i))
-	        self.outputs.append(labels.index(i[:-17]))
 
     def __getitem__(self, index):
         '''
@@ -57,18 +53,18 @@ class Caltech(VisionDataset):
         Returns:
             tuple: (sample, target) where target is class_index of the target class.
         '''
-        image = self.dataset[index] 
-        label = self.outputs[index]
-        
-        #image, label = ... 
-        # Provide a way to access image and label via index
-        # Image should be a PIL Image
-        # label can be int
 
+        #image, label = ... # Provide a way to access image and label via index
+                           # Image should be a PIL Image
+                           # label can be int
+        image = self.data[index]
+        label = self.labels[index]
         # Applies preprocessing when accessing the image
         if self.transform is not None:
             image = self.transform(image)
-
+        if self.target_transform is not None:
+            label = self.target_transform(label)
+            
         return image, label
 
     def __len__(self):
@@ -77,4 +73,4 @@ class Caltech(VisionDataset):
         It is mandatory, as this is used by several other components
         '''
         #length = ... # Provide a way to get the length (number of elements) of the dataset
-        return len(self.dataset)
+        return len(self.data)
