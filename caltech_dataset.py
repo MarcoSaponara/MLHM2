@@ -20,7 +20,7 @@ class Caltech(VisionDataset):
 
         self.split = split # This defines the split you are going to use
                            # (split files are called 'train.txt' and 'test.txt')
-
+        folder = list(os.path.split(root))
         '''
         - Here you should implement the logic for reading the splits files and accessing elements
         - If the RAM size allows it, it is faster to store all data in memory
@@ -31,8 +31,7 @@ class Caltech(VisionDataset):
         '''
         self.labels = []
         self.data = []
-        #with open(split + '.txt', 'r') as f:
-        with open('https://github.com/MarcoSaponara/MLHM2/blob/master/' + split + '.txt', 'r') as f:
+        with open(folder + split + '.txt', 'r') as f:
             for line in f:
                 line = line.replace('\n', '')
                 if line[:-15].lower()!='background_google':
